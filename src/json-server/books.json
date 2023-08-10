@@ -1,7 +1,22 @@
 {
     "books":[
         {
-            "id":1
+            "id":1,
+            "title":"learn nodejs",
+            "price":"10",
+            "description":"amazing , wery helpful"
+        },
+        {
+            "id":2,
+            "title":"learn vuejs",
+            "price":"10",
+            "description":"amazing , wery helpful"
+        },
+        {
+            "id":3,
+            "title":"learn expressjs",
+            "price":"10",
+            "description":"amazing , wery helpful"
         }
     ]
 }

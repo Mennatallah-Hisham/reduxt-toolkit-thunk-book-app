@@ -1,7 +1,7 @@
 import React, { Fragment,useEffect } from 'react';
 import BookInfo from './BookInfo';
 import BooksList from './BooksList';
-import { useDispatch } from 'react-redux';
+import { useDispatch , useSelector } from 'react-redux';
 import { getBooks } from '../../store/bookSlice';
 
 
@@ -9,6 +9,7 @@ import './book.css';
 
 const PostContainer = () => {
   const dispatch= useDispatch();
+  const {isLoading}=useSelector(state=>state.books);
   useEffect(()=>{
  dispatch(getBooks());
   },[]);
@@ -17,10 +18,12 @@ const PostContainer = () => {
       <hr className='my-5' />
       <div className='row'>
         <div className='col'>
-          <BooksList />
+           <BooksList isLoading={isLoading}/> 
+         
         </div>
         <div className='col side-line'>
-          <BookInfo />
+        <BookInfo  isLoading={isLoading}/>
+       
         </div>
       </div>
     </Fragment>

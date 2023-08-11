@@ -24,23 +24,31 @@ export const getBooks = createAsyncThunk("book/getBooks", async (_,thunkAPI) => 
 
 
 const initialState = {
-  books: null,
+  booksList: null,
+  isLoading:false,
 };
 const bookSlice = createSlice({
   name: "book",
   initialState,
   extraReducers: {
 
-    
+    //[getBooks.pending]  b2ol ll reducer t listen to this action
+    //w lma y7sl  t execute 2l new action
     [getBooks.pending]:(state,action)=>{
+      state.isLoading=true;
         console.log(action);
 
     },
     [getBooks.fulfilled]:(state,action)=>{
-        console.log(action);
+      state.isLoading=false;
+      console.log(action.payload);
+      state.booksList=action.payload;
+      
 
     },
     [getBooks.rejected]:(state,action)=>{
+      state.isLoading=false;
+   
         console.log(action);
 
     }

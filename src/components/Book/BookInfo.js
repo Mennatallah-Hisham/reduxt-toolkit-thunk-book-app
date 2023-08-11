@@ -1,6 +1,6 @@
 import React, { Fragment } from 'react';
 
-const BookInfo = () => {
+const BookInfo = ({isLoading}) => {
   return (
     <Fragment>
       <h2>Book Details</h2>

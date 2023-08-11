@@ -2,7 +2,7 @@ import React from 'react';
 
 
 const BooksList = ({isLoading,books}) => {
-  const bookList =books.map((book)=>(
+  const bookList = books.length>0 ? books.map((book)=>(
     <li className='list-group-item d-flex  justify-content-between align-items-center'
     key={book.id}>
     <div>{book.title}</div>
@@ -16,7 +16,9 @@ const BooksList = ({isLoading,books}) => {
     </div>
   </li>
 
-  ));
+  )): <div className="alert alert-dark" role="alert">
+there is no books avialabe
+</div>;
   return (
     <div>
       <h2>Books List</h2>

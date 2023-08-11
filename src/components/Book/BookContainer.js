@@ -9,7 +9,7 @@ import './book.css';
 
 const PostContainer = () => {
   const dispatch= useDispatch();
-  const {isLoading}=useSelector(state=>state.books);
+  const {isLoading,bookList}=useSelector(state=>state.books);
   useEffect(()=>{
  dispatch(getBooks());
   },[]);
@@ -18,7 +18,7 @@ const PostContainer = () => {
       <hr className='my-5' />
       <div className='row'>
         <div className='col'>
-           <BooksList isLoading={isLoading}/> 
+           <BooksList isLoading={isLoading} books={bookList}/> 
          
         </div>
         <div className='col side-line'>

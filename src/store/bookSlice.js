@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
+
 // htb2 2l action 2li h3mlo dispatch
 // createAsyncThunk return gp of actions pending , fulfilled , rejected
 
@@ -25,7 +26,11 @@ export const getBooks = createAsyncThunk(
 export const insertBook = createAsyncThunk(
   "book/insertBook",
   async (book, thunkAPI) => {
-    const { rejectWithValue } = thunkAPI;
+    const { rejectWithValue ,getState} = thunkAPI;
+    //getState() ==> obj {book:{},auth{}}
+    book.userName=getState().auth.name;
+  
+
     try {
       const response = await fetch("http://localhost:3005/books", {
         method: "POST",
@@ -42,6 +47,22 @@ export const insertBook = createAsyncThunk(
     }
   }
 );
+
+export const deleteBook = createAsyncThunk("book/deleteBook",async(book,thunkAPI)=>{
+  
+  const {rejectWithValue}=thunkAPI;
+  try{
+    const response=fetch(`http://localhost:3005/books/${book.id}`,{
+      method:'Delete'
+    });
+// mfesh response.json()asln
+   // const data = response.json();
+    return book;
+
+  }catch(err){
+    return rejectWithValue(err.message);
+  }
+})
 const initialState = {
   bookList: [],
   isLoading: false,
@@ -74,20 +95,38 @@ const bookSlice = createSlice({
     [insertBook.pending]: (state, action) => {
       state.isLoading = true;
       state.error = null;
-      console.log(action);
+ 
     },
     [insertBook.fulfilled]: (state, action) => {
       state.isLoading = false;
       state.error = null;
-      console.log(action);
+  
       state.bookList.push(action.payload);
     },
     [insertBook.rejected]: (state, action) => {
       state.isLoading = false;
       state.error = action.payload;
     },
+    //delete
+    [deleteBook.pending]:(state,action)=>{
+     state.isLoading=true;
+     state.error=null
+    },
+    [deleteBook.fulfilled]:(state,action)=>{
+      state.isLoading=false;
+      state.error=null;
+      state.bookList=state.bookList.filter((book)=>book.id !== action.payload.id)
+
+    }
+    ,
+    [deleteBook.rejected]:(state,action)=>{
+      state.isLoading=false;
+    state.error=action.payload;
+    }
   },
 });
+
+
 
 export const bookActions = bookSlice.actions;
 export default bookSlice;

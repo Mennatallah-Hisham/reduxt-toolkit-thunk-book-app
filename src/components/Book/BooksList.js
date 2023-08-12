@@ -1,7 +1,9 @@
-import React from 'react';
+import { useDispatch } from "react-redux";
+import { deleteBook } from "../../store/bookSlice";
 
 
-const BooksList = ({isLoading,books}) => {
+const BooksList = ({isLoading,books,isLoggedIn}) => {
+  const dispatch=useDispatch();
   const bookList = books.length>0 ? books.map((book)=>(
     <li className='list-group-item d-flex  justify-content-between align-items-center'
     key={book.id}>
@@ -10,7 +12,11 @@ const BooksList = ({isLoading,books}) => {
       <button type='button' className='btn btn-primary'>
         Read
       </button>
-      <button type='button' className='btn btn-danger'>
+      <button type='button' className='btn btn-danger'
+      disabled={!isLoggedIn}
+       onClick={()=>{
+        dispatch(deleteBook(book))
+      }}>
         Delete
       </button>
     </div>

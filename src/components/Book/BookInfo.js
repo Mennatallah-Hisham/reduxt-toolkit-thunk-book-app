@@ -10,9 +10,13 @@ const BookInfo = ({isLoading,book}) => {
       {book?
       (
         <div>
-        <p className='fw-bold'>Title:{book.title}</p>
-        <p className='fw-light'>Description:{book.description}</p>
-        <p className='fst-italic'>Price:{book.price}</p>
+          <div className='row mt-5'>
+          <p className='h5 text-capitalize fs-3 col-6'>{book.title}</p>
+          <p className='h5 col-6'>{book.price} $</p>
+          </div>
+       
+        <p className='fw-light'>{book.description}</p>
+       
       </div>
 
       ):

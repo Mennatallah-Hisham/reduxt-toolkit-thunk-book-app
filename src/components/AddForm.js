@@ -31,10 +31,13 @@ const Addform = () => {
   }
 
   return (
-    <div className='row'>
-      <div className='col-6 offset-3 mt-3'>
+ 
+      <div>
+  
+   
         <h2>Insert Book</h2>
-        <form onSubmit={submitHandler}>
+        <form onSubmit={submitHandler} className='row'>
+       <div className='col-md-6'>
           <div className='form-group'>
             <label htmlFor='title'>Title</label>
             <input type='text' className='form-control' id='title' 
@@ -45,6 +48,8 @@ const Addform = () => {
             <input type='number' className='form-control' id='price'
             ref={priceRef} required />
           </div>
+          </div>
+          <div className='col-md-6'>
           <div className='form-group'>
             <label htmlFor='Description'>Description</label>
             <textarea
@@ -58,9 +63,12 @@ const Addform = () => {
           <button type='submit' className='btn btn-primary' disabled={!isLoggedIn}>
             Submit
           </button>
+          </div>
         </form>
+              
       </div>
-    </div>
+
+
   );
 };
 

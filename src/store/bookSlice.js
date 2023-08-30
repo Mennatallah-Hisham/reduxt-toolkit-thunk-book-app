@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-
+import { reportActions } from "./reportSlice";
 
 // htb2 2l action 2li h3mlo dispatch
 // createAsyncThunk return gp of actions pending , fulfilled , rejected
@@ -26,7 +26,7 @@ export const getBooks = createAsyncThunk(
 export const insertBook = createAsyncThunk(
   "book/insertBook",
   async (book, thunkAPI) => {
-    const { rejectWithValue ,getState} = thunkAPI;
+    const { rejectWithValue ,getState,dispatch} = thunkAPI;
     //getState() ==> obj {book:{},auth{}}
     book.userName=getState().auth.name;
   
@@ -40,9 +40,10 @@ export const insertBook = createAsyncThunk(
         },
       });
       const data = await response.json();
-
+dispatch(reportActions.logInsert({name:"insertBook",status:"success"}));
       return data;
     } catch (err) {
+      dispatch(reportActions.logInsert({name:"insertBook",status:"failed"}));
       return rejectWithValue(err.message);
     }
   }
@@ -62,7 +63,8 @@ export const deleteBook = createAsyncThunk("book/deleteBook",async(book,thunkAPI
   }catch(err){
     return rejectWithValue(err.message);
   }
-})
+});
+
 const initialState = {
   bookList: [],
   isLoading: false,
@@ -71,6 +73,7 @@ const initialState = {
 const bookSlice = createSlice({
   name: "book",
   initialState,
+ 
   extraReducers: {
     //[getBooks.pending]  b2ol ll reducer t listen to this action
     //w lma y7sl  t execute 2l new action
